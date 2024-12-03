@@ -1,0 +1,6 @@
+paho-mqtt
+loguru
+python-dotenv
+pydantic
+coverage
+parameterized

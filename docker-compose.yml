@@ -1,0 +1,49 @@
+services:
+  engine:
+    build:
+      context: ./dockerfiles
+    volumes:
+      - ./proj:/proj
+      # For local time
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    command: python -m src.RuleEngine
+    container_name: RuleEngine
+    env_file:
+      - .env.prod
+    environment:
+      - TZ=America/Vancouver
+    restart: always
+
+  webapp:
+    build:
+      context: ./dockerfiles
+    volumes:
+      - ./proj:/proj
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    command: python -m src.webApp
+    container_name: webapp
+    env_file:
+      - .env.prod
+    environment:
+      - TZ=America/Vancouver
+    restart: always
+
+  testreport:
+    build:
+      context: ./dockerfiles
+    volumes:
+      - ./proj:/proj
+      # For local time
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    command: bash -c "
+      python -m coverage run -m unittest -v test.test_RuleEngine
+      && python -m coverage report
+      && python -m coverage html"
+    container_name: TestReport
+    env_file:
+      - .env.prod
+    environment:
+      - TZ=America/Vancouver
