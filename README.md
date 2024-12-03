@@ -1,3 +1,5 @@
+# A Rules Engine with MQTT Broker and Winter Supplement Web App
+
 - [A Rules Engine with MQTT Broker and Winter Supplement Web App](#a-rules-engine-with-mqtt-broker-and-winter-supplement-web-app)
   - [Software Language](#software-language)
   - [System Overview](#system-overview)
@@ -9,8 +11,6 @@
     - [The mock **WSWA**](#the-mock-wswa)
     - [Unit Test](#unit-test)
 
-
-# A Rules Engine with MQTT Broker and Winter Supplement Web App
 
 ## Software Language
 
@@ -38,14 +38,14 @@ This system consists of the **Winter Supplement Web App (WSWA)**, a **MQTT broke
 In the **WSWA**, users input their data, and click submit button.
 **WSWA** works as a MQTT client and publishes this message of user input to the **MQTT broker**.
 The topic prefix of this MQTT message is something like `BRE/calculateWinterSupplementInput/`.
-**the engine** also works as a MQTT client and subscribes to this topic to receive this message.
+**The engine** also works as a MQTT client and subscribes to this topic to receive this message.
 After receiving the message, **the engine** processes the data based on the rules of winter supplement.
 Then **the engine** publishes the calculated data to the topic with prefix like `BRE/calculateWinterSupplementOutput/`.
 And the **WSWA** subscribes to this topic to get the calculated result.
 
 > In order to develop **the engine** more conveniently, I made the mock version of the **WSWA**. The MQTT topics are different from the assignment-specified ones. Because the **MQTT broker** is the same to all developers, I don't want to mix my design with others. 
 
-> In order to deploy and run the project more easily, both **the engine** and the mock **WSWA** run inside the Docker containers.
+> In order to deploy and run the project more easily, both **the engine** and the mock **WSWA** can run inside the Docker containers.
 
 ## **Development Environment Set Up Instruction**
 
@@ -128,7 +128,7 @@ The content of this folder should be:
 ├── dockerfiles
 └── proj
 ```
-docker-compose.yml uses .env.prod which contains the assginment-specified MQTT topic prefixes.
+docker-compose.yml uses .env.prod which contains the assignment-specified MQTT topic prefixes.
 
 Then run this command:
 ```bash
